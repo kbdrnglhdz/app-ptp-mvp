@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Configuración del Entorno",
+      "description": "Asegurar que todas las herramientas del proyecto funcionen correctamente.",
+      "category": "Trabajo",
+      "priority": "Alta",
+      "status": "Completado",
+      "dueDate": "2024-03-31"
+    },
+    {
+      "id": 2,
+      "title": "Diseño de la Interfaz",
+      "description": "Refinar los estilos de CSS para que el planificador luzca premium y moderno.",
+      "category": "Diseño",
+      "priority": "Alta",
+      "status": "En Progreso",
+      "dueDate": "2024-04-01"
+    },
+    {
+      "id": 3,
+      "title": "Mock de Datos",
+      "description": "Vincular el archivo .json con la aplicación React de forma asíncrona.",
+      "category": "Desarrollo",
+      "priority": "Media",
+      "status": "Pendiente",
+      "dueDate": "2024-04-02"
+    }
+  ]
+}
