@@ -44,6 +44,7 @@ h1 {
   font-weight: 700;
   background: linear-gradient(to right, var(--text-white), var(--accent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 2rem;
   letter-spacing: -0.02em;
@@ -190,4 +191,140 @@ input:focus {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted);
+}
+
+/* Comments Section Styles */
+.comments-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comments-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.comment-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  transition: var(--transition);
+}
+
+.comment-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.comment-text {
+  font-size: 0.85rem;
+  color: var(--text-white);
+  line-height: 1.4;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.comment-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+  transition: var(--transition);
+}
+
+.comment-btn:hover {
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.delete-comment-btn:hover {
+  color: var(--priority-high);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.add-comment-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.comment-input {
+  flex-grow: 1;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.send-comment-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.send-comment-btn:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+.comment-edit-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+/* Scrollbar custom for comments */
+.comment-list::-webkit-scrollbar {
+  width: 4px;
+}
+.comment-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.comment-list::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
 }

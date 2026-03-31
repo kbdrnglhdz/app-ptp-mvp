@@ -7,7 +7,8 @@
       "category": "Trabajo",
       "priority": "Alta",
       "status": "Completado",
-      "dueDate": "2024-03-31"
+      "dueDate": "2024-03-31",
+      "comments": []
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
       "category": "Diseño",
       "priority": "Alta",
       "status": "En Progreso",
-      "dueDate": "2024-04-01"
+      "dueDate": "2024-04-01",
+      "comments": []
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
       "category": "Desarrollo",
       "priority": "Media",
       "status": "Pendiente",
-      "dueDate": "2024-04-02"
+      "dueDate": "2024-04-02",
+      "comments": []
     }
   ]
 }

@@ -15,9 +15,9 @@ const App = () => {
 
   // Datos de respaldo para cuando se abre como archivo local (CORS fallback)
   const initialData = [
-    { id: 1, title: "Configuración del Entorno", description: "Asegurar que todas las herramientas funcionen correctamente.", category: "Trabajo", priority: "Alta", status: "Completado", dueDate: "2024-03-31" },
-    { id: 2, title: "Diseño de la Interfaz", description: "Refinar los estilos de CSS para que el planificador luzca premium y moderno.", category: "Diseño", priority: "Alta", status: "En Progreso", dueDate: "2024-04-01" },
-    { id: 3, title: "Mock de Datos", description: "Vincular el archivo .json con la aplicación React de forma asíncrona.", category: "Desarrollo", priority: "Media", status: "Pendiente", dueDate: "2024-04-02" }
+    { id: 1, title: "Configuración del Entorno", description: "Asegurar que todas las herramientas funcionen correctamente.", category: "Trabajo", priority: "Alta", status: "Completado", dueDate: "2024-03-31", comments: [] },
+    { id: 2, title: "Diseño de la Interfaz", description: "Refinar los estilos de CSS para que el planificador luzca premium y moderno.", category: "Diseño", priority: "Alta", status: "En Progreso", dueDate: "2024-04-01", comments: [] },
+    { id: 3, title: "Mock de Datos", description: "Vincular el archivo .json con la aplicación React de forma asíncrona.", category: "Desarrollo", priority: "Media", status: "Pendiente", dueDate: "2024-04-02", comments: [] }
   ];
 
   useEffect(() => {
@@ -54,12 +54,42 @@ const App = () => {
     const taskObj = {
       ...newTask,
       id: Date.now(),
-      status: 'Pendiente'
+      status: 'Pendiente',
+      comments: []
     };
     
     setTasks([taskObj, ...tasks]);
     setNewTask({ title: '', description: '', category: 'Trabajo', priority: 'Media', dueDate: '' });
     setShowForm(false);
+  };
+
+  const addComment = (taskId, text) => {
+    if (!text.trim()) return;
+    const newComment = {
+      id: Date.now(),
+      text,
+      date: new Date().toLocaleString()
+    };
+    setTasks(tasks.map(t => 
+      t.id === taskId ? { ...t, comments: [...(t.comments || []), newComment] } : t
+    ));
+  };
+
+  const updateComment = (taskId, commentId, newText) => {
+    setTasks(tasks.map(t => 
+      t.id === taskId ? {
+        ...t,
+        comments: t.comments.map(c => 
+          c.id === commentId ? { ...c, text: newText, date: new Date().toLocaleString() + ' (editado)' } : c
+        )
+      } : t
+    ));
+  };
+
+  const deleteComment = (taskId, commentId) => {
+    setTasks(tasks.map(t => 
+      t.id === taskId ? { ...t, comments: t.comments.filter(c => c.id !== commentId) } : t
+    ));
   };
 
   const toggleTaskStatus = (id) => {
@@ -177,10 +207,95 @@ const App = () => {
                 </button>
               </div>
             </div>
+
+            {/* Sección de Comentarios */}
+            <div className="comments-section">
+              <div className="comments-title">
+                💬 Comentarios ({(task.comments || []).length})
+              </div>
+              
+              <div className="comment-list">
+                {(task.comments || []).map(comment => (
+                  <CommentItem 
+                    key={comment.id} 
+                    comment={comment} 
+                    onUpdate={(newText) => updateComment(task.id, comment.id, newText)}
+                    onDelete={() => deleteComment(task.id, comment.id)}
+                  />
+                ))}
+              </div>
+
+              <AddCommentForm onAdd={(text) => addComment(task.id, text)} />
+            </div>
           </div>
         ))}
       </main>
     </div>
+  );
+};
+
+const CommentItem = ({ comment, onUpdate, onDelete }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(comment.text);
+
+  const handleUpdate = () => {
+    onUpdate(editText);
+    setIsEditing(false);
+  };
+
+  return (
+    <div className="comment-item">
+      <div className="comment-header">
+        <span>🕒 {comment.date}</span>
+      </div>
+      {isEditing ? (
+        <div>
+          <textarea 
+            className="comment-edit-input"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+          />
+          <div className="comment-actions">
+            <button className="comment-btn" onClick={handleUpdate}>Guardar</button>
+            <button className="comment-btn" onClick={() => setIsEditing(false)}>Cancelar</button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="comment-text">{comment.text}</div>
+          <div className="comment-actions">
+            <button className="comment-btn" onClick={() => setIsEditing(true)}>Editar</button>
+            <button className="comment-btn delete-comment-btn" onClick={onDelete}>Eliminar</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const AddCommentForm = ({ onAdd }) => {
+  const [text, setText] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    onAdd(text);
+    setText('');
+  };
+
+  return (
+    <form className="add-comment-form" onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        className="comment-input" 
+        placeholder="Escribe un comentario..." 
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button type="submit" className="send-comment-btn">
+        ➤
+      </button>
+    </form>
   );
 };
 
